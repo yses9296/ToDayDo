@@ -16,7 +16,8 @@ const ToDoView = () => {
 
     useEffect(() => {
         loadToDos();
-    },[toggle])
+    },[toggle, todos])
+
 
     const saveTodos = async (_todo) => {
         try {
@@ -45,7 +46,7 @@ const ToDoView = () => {
         //reset
         setTask('');
     }
-    const removeTaskHandler = async (id) => {
+    const removeTaskHandler = (id) => {
         Alert.alert(
             "Delete To Do", 
             "Are you sure?", 
@@ -63,19 +64,16 @@ const ToDoView = () => {
     }
     const toggleCheck = (id) => {
         const newTodos = {...todos}
-        console.log(newTodos)
-  
-        if(newTodos[id].completed == true){
-            return newTodos[id].completed = false
-        }
-        if(newTodos[id].completed == false) {
-            return newTodos[id].completed = true
-        }
+
+        newTodos[id].completed ? newTodos[id].completed=false : newTodos[id].completed=true
 
         setToggle( prev => !prev )
         setTodos(newTodos);    
         saveTodos(newTodos);
-        
+
+    }
+    const updateTaskHandler = async(id) => {
+
     }
 
     return (
@@ -92,10 +90,20 @@ const ToDoView = () => {
             {Object.keys(todos).reverse().map( key => (
                 <View key={key} style={styles.task}>
  
-                    { todos[key].completed == false
-                    ? <Fontisto name="checkbox-passive" size={24} color="black" style={styles.checkBox} onPress={() => toggleCheck(key) }/> 
-                    : <Fontisto name="checkbox-active" size={24} color="black" style={styles.checkBox} onPress={() => toggleCheck(key) }/>}
-                    <Text style={styles.taskText}>{todos[key].text}</Text>
+                    { !todos[key].completed
+                    ? (
+                        <>
+                            <Fontisto name="checkbox-passive" size={20} color={theme.white} style={styles.checkBox} onPress={() => toggleCheck(key) }/> 
+                            <Text style={{...styles.taskText, color: 'white'}}>{todos[key].text}</Text>
+                        </>
+                    )
+                    : (
+                        <>
+                            <Fontisto name="checkbox-active" size={20} color={theme.grey} style={styles.checkBox} onPress={() => toggleCheck(key) }/>
+                            <Text style={{...styles.taskText, color: '#3A3D40'}}>{todos[key].text}</Text>
+                        </>
+                    )}
+                    
 
                     <TouchableOpacity onPress={ () => removeTaskHandler(key) }>
                         <Fontisto name="trash" size={20} color={theme.grey} />
