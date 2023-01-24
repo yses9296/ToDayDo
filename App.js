@@ -1,32 +1,16 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text, Pressable, TextInput, ScrollView, Dimensions  } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
+import ToDoView from './components/ToDoView';
 import CalendarView from './components/CalendarView';
 
 import { Fontisto } from '@expo/vector-icons'; 
 import { theme } from './colors.js';
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
-
 export default function App() {
   const [activeTodo, setActiveTodo] = useState(true);
   const clickTodo = () => setActiveTodo(true);
   const clickCalendar = () => setActiveTodo(false);
-
-  const [task, setTask] = useState('');
-  const onChangeText = (e) => setTask(e);
-
-  const [todoList, setTodoList] = useState({});
-
-  const addTaskHandler = () => {
-    if(task === "") {
-      return
-    }
-    const newTodoList = {...todoList, [Date.now()]: {text: task} }
-    setTodoList(newTodoList)    
-    //reset
-    setTask('');
-  }
 
   return (
     <View style={styles.container}>
@@ -41,31 +25,7 @@ export default function App() {
         </Pressable>
       </View>
   
-      {activeTodo ? (
-        <View>
-          <TextInput 
-            style={styles.taskInput}
-            onChangeText={text => onChangeText(text)}
-            onSubmitEditing={addTaskHandler}
-            value={task}
-            placeholder= 'add a new task'
-            returnKeyType='done'
-          />
-          {/* <View style={{alignItems: 'center'}}>
-            <Pressable onPress={addTaskHandler} style={styles.addBtn}>
-              <Text style={styles.addText}>Add</Text>
-            </Pressable>
-          </View> */}
-
-          <ScrollView>
-            {Object.keys(todoList).map( key => 
-              (<View style={styles.task}>
-                <Text style={styles.taskText}>{todoList[key].text}</Text>
-              </View>)
-            )}
-          </ScrollView>
-        </View>       
-      ) : ( <CalendarView/> )}
+      {activeTodo ? <ToDoView/> : <CalendarView/>}
 
     </View>
   );
@@ -87,43 +47,6 @@ const styles = StyleSheet.create({
   headerText: {
     color: theme.grey,
     fontSize: 40,
-    fontWeight: '500'
-  },
-
-  taskInput: {
-    backgroundColor: theme.white,
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    marginVertical: 20,
-    fontSize: 18,
-  },
-
-  // addBtn: {
-  //   width: SCREEN_WIDTH/2,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   borderRadius: 4,
-  //   elevation: 3,
-  //   backgroundColor: theme.grey,
-  //   marginBottom: 30
-  // },
-  // addText: {
-  //   color: '#fff',
-  //   textAlign: 'center',
-  //   paddingVertical: 10,
-  // },
-
-  task: {
-    backgroundColor: theme.toDoBg,
-    marginBottom: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderRadius: 5
-  },
-  taskText: {
-    color: theme.white,
-    fontSize: 18,
     fontWeight: '500'
   },
 

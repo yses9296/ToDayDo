@@ -6,12 +6,12 @@ import { theme } from '../colors';
 
 const CalendarView = () => {
   const [event, setEvent] = useState('');
-  const generateId = 1;
+  const today =  format(new Date(), 'yyyy-MM-dd')
+
   const posts = [
     {
       id: 1,
-      title: "First Title.",
-      contents: "First Content.",
+      title: "First Title",
       date: "2023-01-26",
     }
   ];
