@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
 import { format } from "date-fns";
 import { Calendar } from "react-native-calendars";
-import uuid from 'react-native-uuid';
 import { theme } from '../colors';
 
 const CalendarView = () => {
