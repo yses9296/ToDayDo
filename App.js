@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text, Button, Pressable, SafeAreaView, TextInput } from 'react-native';
-// import { Calendar } from "react-native-calendars";
 import CalendarView from './components/CalendarView';
 
 import { Fontisto } from '@expo/vector-icons'; 
@@ -14,7 +13,22 @@ export default function App() {
 
   const [task, setTask] = useState('');
   const onChangeText = (e) => setTask(e);
-  const addTaskHandler = () => {}
+
+  const [todoList, setTodoList] = useState({});
+
+  const addTaskHandler = () => {
+    alert(task)
+    if(task === "") {
+      return
+    }
+
+    const newTodoList = {...todoList, [Date.now()]: {text: task} }
+    setTodoList(newTodoList)
+    
+    //reset
+    setTask('');
+  }
+console.log(todoList)
 
   return (
     <View style={styles.container}>
@@ -38,6 +52,7 @@ export default function App() {
           <TextInput 
             style={styles.taskInput}
             onChangeText={text => onChangeText(text)}
+            onSubmitEditing={addTaskHandler}
             value={task}
             multiline
             placeholder= 'New Task'
@@ -46,9 +61,9 @@ export default function App() {
             onPress={addTaskHandler}
             title="Add"
           />
-        </View>
+        </View>       
       ) : ( <CalendarView/> )}
-  
+      
     </View>
   );
 }
