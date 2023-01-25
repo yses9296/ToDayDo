@@ -58,7 +58,7 @@ const CalendarView = () => {
     }
   }
   const addEventHandler = async () => {
-    if(event !== "" || selectedDate != null) {
+    if(event !== "" && event !== null && selectedDate != null) {
       const newEvents = [...events, {id: [Date.now()], title: event, date: selectedDate} ]
       setEvents(newEvents);    
       await saveEvents(newEvents);
@@ -67,7 +67,7 @@ const CalendarView = () => {
       setEvent('');
     }
     else{
-      alert('Error')
+      return
     }
   }
 
