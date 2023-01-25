@@ -1,0 +1,34 @@
+{
+  "files": {
+    "app.js": "/ToDayDo/static/js/app.78819453.chunk.js",
+    "app.js.map": "/ToDayDo/static/js/app.78819453.chunk.js.map",
+    "runtime~app.js": "/ToDayDo/static/js/runtime~app.a35cab13.js",
+    "runtime~app.js.map": "/ToDayDo/static/js/runtime~app.a35cab13.js.map",
+    "static/js/2.e96bc65b.chunk.js": "/ToDayDo/static/js/2.e96bc65b.chunk.js",
+    "static/js/2.e96bc65b.chunk.js.map": "/ToDayDo/static/js/2.e96bc65b.chunk.js.map",
+    "fonts/AntDesign.ttf": "/ToDayDo/./fonts/AntDesign.ttf",
+    "fonts/Entypo.ttf": "/ToDayDo/./fonts/Entypo.ttf",
+    "fonts/Feather.ttf": "/ToDayDo/./fonts/Feather.ttf",
+    "fonts/FontAwesome.ttf": "/ToDayDo/./fonts/FontAwesome.ttf",
+    "fonts/FontAwesome5_Brands.ttf": "/ToDayDo/./fonts/FontAwesome5_Brands.ttf",
+    "fonts/FontAwesome5_Solid.ttf": "/ToDayDo/./fonts/FontAwesome5_Solid.ttf",
+    "fonts/Fontisto.ttf": "/ToDayDo/./fonts/Fontisto.ttf",
+    "fonts/Foundation.ttf": "/ToDayDo/./fonts/Foundation.ttf",
+    "fonts/Ionicons.ttf": "/ToDayDo/./fonts/Ionicons.ttf",
+    "fonts/MaterialCommunityIcons.ttf": "/ToDayDo/./fonts/MaterialCommunityIcons.ttf",
+    "fonts/MaterialIcons.ttf": "/ToDayDo/./fonts/MaterialIcons.ttf",
+    "fonts/SimpleLineIcons.ttf": "/ToDayDo/./fonts/SimpleLineIcons.ttf",
+    "favicon-16.png": "/ToDayDo/favicon-16.png",
+    "favicon-32.png": "/ToDayDo/favicon-32.png",
+    "favicon.ico": "/ToDayDo/favicon.ico",
+    "index.html": "/ToDayDo/index.html",
+    "manifest.json": "/ToDayDo/manifest.json",
+    "serve.json": "/ToDayDo/serve.json",
+    "static/js/2.e96bc65b.chunk.js.LICENSE.txt": "/ToDayDo/static/js/2.e96bc65b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime~app.a35cab13.js",
+    "static/js/2.e96bc65b.chunk.js",
+    "static/js/app.78819453.chunk.js"
+  ]
+}
