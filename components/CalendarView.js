@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TextInput, Button, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
 import { Calendar } from "react-native-calendars";
 import { theme } from '../colors';
+import EventItem from './EventItem';
+
+const STORAGE_KEY ='@events'
 
 const CalendarView = () => {
   const [event, setEvent] = useState('');
-  const today =  format(new Date(), 'yyyy-MM-dd')
-
-  const posts = [
-    {
-      id: 1,
-      title: "First Title",
-      date: "2023-01-26",
-    }
-  ];
-
-  const markedDates = posts.reduce((acc, c) => {
-    const formattedDate = format(new Date(c.date), 'yyyy-MM-dd');
-    acc[formattedDate] = {marked: true};
-    return acc;
-  }, {});
-
+  const [events, setEvents] = useState([]);
+  const today =  format(new Date(), 'yyyy-MM-dd');
   const [selectedDate, setSelectedDate] = useState( format(new Date(), "yyyy-MM-dd") );
   
+
+  const markedDates = () => {
+    if(events.length){
+      events.reduce((acc, c) => {
+        const formattedDate = format(new Date(c.date), 'yyyy-MM-dd');
+        acc[formattedDate] = {marked: true};
+        return acc;
+      }, {});
+    }
+    return {today: {selected: true}}
+  }
+
   const markedSelectedDates = {
     ...markedDates,
     [selectedDate]: {
@@ -33,9 +35,42 @@ const CalendarView = () => {
   }
 
   const onChangeText = (e) => setEvent(e);
-  const addEventHandler = () => {
-    alert(selectedDate)
+
+  useEffect(()=>{
+    loadEvents();
+  },[events])
+
+  const loadEvents = async () => {
+    try {
+        const data = await AsyncStorage.getItem(STORAGE_KEY);
+        return data !== null ? setEvents(JSON.parse(data)) : null;
+    }
+    catch(e){
+        alert(e)
+    }
+}
+  const saveEvents = async (_event) => {
+    try {
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(_event))
+    }
+    catch(e){
+        alert(e)
+    }
   }
+  const addEventHandler = async () => {
+    if(event !== "" || selectedDate != null) {
+      const newEvents = [...events, {id: [Date.now()], title: event, date: selectedDate} ]
+      setEvents(newEvents);    
+      await saveEvents(newEvents);
+  
+      //reset
+      setEvent('');
+    }
+    else{
+      alert('Error')
+    }
+  }
+
 
   return (
     <View>
@@ -65,9 +100,18 @@ const CalendarView = () => {
             title="Add"
           />
         </View>
+
+        <ScrollView>
+          {events.filter(event => event.date == selectedDate).map( (v,i) => {
+              return (
+                <EventItem key={i} _events={events} eventItem={v} _saveEvents={saveEvents}/>
+              )
+          })}
+        </ScrollView>
     </View>
   )
 }
+
 const styles = StyleSheet.create({
     calendar: {
       padding: 20,
@@ -88,8 +132,8 @@ const styles = StyleSheet.create({
       fontSize: 18
     },
     addBtn: {
-
     },
+
 });
 
 export default CalendarView
