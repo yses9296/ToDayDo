@@ -1,8 +1,9 @@
 # ToDayDo Application - test project
 
 ## ToDo List 
-Add some list to do it.
-When you completed, click the checkbox to make sure that you did it :)
+
+<p style="font-size: 24px;">Add some list to do it.</p>
+<p style="font-size: 24px;">When you completed, click the checkbox to make sure that you did it :)</p>
 <img src="https://user-images.githubusercontent.com/54027716/214574216-30fdb13f-91c6-44fd-9585-feca4b52ce05.jpg" alt="calendar" style="display: block; width: 500px" />
 
 
