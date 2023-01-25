@@ -1,4 +1,8 @@
 # ToDayDo Application - test project
+Here's ToDayDo app project page <br/>
+https://expo.dev/@yses9296/ToDayDo?serviceType=classic&distribution=expo-go
+
+<hr/>
 
 ### `ToDo List`
 <p style="font-size: 24px;">Add some list to do it.</p>
@@ -12,6 +16,4 @@
 <img src="https://user-images.githubusercontent.com/54027716/214574202-a7451c53-fa4d-42ca-9fa3-513a07c5f36d.jpg" alt="todo" style="display: block; width: 500px; margin: 0 auto; text-align=center" />
 
 
-<hr/>
-Here's ToDayDo app project page <br/>
-https://expo.dev/@yses9296/ToDayDo?serviceType=classic&distribution=expo-go
+
