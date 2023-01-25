@@ -1,32 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, } from 'react-native';
+import React, {useState, useEffect, memo } from 'react';
+import { Platform, StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, } from 'react-native';
 import { FontAwesome , Fontisto } from '@expo/vector-icons'; 
 import { theme } from '../colors.js';
 
-const ToDoItem = ({ _key, __todos, _saveTodos, _loadToDos}) => {
+const ToDoItem = memo(({ _key, __todos, _saveTodos, _loadToDos}) => {
     const [_todos, setTodos] = useState({...__todos});
     const [isEditing , setIsEditing] = useState(false);
     const [newTask, setNewTask] = useState(_todos[_key].text);
 
-    useEffect(() => {
-        _loadToDos();
-    },[_todos, isEditing]);
-
     const onChangeText = (e) => setNewTask(e);
     const removeTaskHandler = (id) => {
-        Alert.alert(
-            "Delete To Do", 
-            "Are you sure?", 
-            [
-                {text: "Cancel"}, 
-                {text: "Delete", style: "destructive", onPress: () => {
-                    const newTodos = {..._todos}
-                    delete newTodos[id]
-                
-                    _saveTodos(newTodos);
-                }}
-            ]
-        )
+        if(Platform.OS === "web"){
+            const confirm = window.confirm("Do you want to delete this To Do?")
+            if(confirm){
+                const newTodos = {..._todos}
+                delete newTodos[id]
+            
+                _saveTodos(newTodos);
+            }
+        }
+        else{
+            Alert.alert(
+                "Delete To Do", 
+                "Are you sure?", 
+                [
+                    {text: "Cancel"}, 
+                    {text: "Delete", style: "destructive", onPress: () => {
+                        const newTodos = {..._todos}
+                        delete newTodos[id]
+                    
+                        _saveTodos(newTodos);
+                    }}
+                ]
+            )
+        }
+
     }
     const toggleCheck = (id) => {
         const newTodos = {..._todos}
@@ -95,7 +103,8 @@ const ToDoItem = ({ _key, __todos, _saveTodos, _loadToDos}) => {
         </>
         
     )
-}
+});
+
 const styles = StyleSheet.create({
     task: {
         backgroundColor: theme.toDoBg,

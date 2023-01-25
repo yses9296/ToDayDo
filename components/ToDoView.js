@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity, Dimensions, Alert, Animated, Keyboard } from 'react-native';
+import React, { memo, useEffect, useState } from 'react';
+import { StyleSheet, View, TextInput, ScrollView, Dimensions, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { theme } from '../colors.js';
 import ToDoItem from './ToDoItem.js';
@@ -7,14 +7,13 @@ import ToDoItem from './ToDoItem.js';
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const STORAGE_KEY ='@toDos'
 
-const ToDoView = () => {
+const ToDoView = memo(() => {
     const [task, setTask] = useState('');
     const [todos, setTodos] = useState({});
 
-
     useEffect(() => {
         loadToDos();
-    },[todos]);
+    },[todos, saveTodos]);
 
     const onChangeText = (e) => setTask(e);
     const saveTodos = async (_todo) => {
@@ -62,7 +61,7 @@ const ToDoView = () => {
             </ScrollView>
         </View> 
     )
-}
+})
 
 const styles = StyleSheet.create({
     taskInput: {

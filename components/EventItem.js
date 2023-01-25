@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import React, { memo, useEffect, useState } from 'react';
+import { Platform, StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { FontAwesome , Fontisto } from '@expo/vector-icons'; 
 import { theme } from '../colors';
 
-const EventItem = ({ _events, eventItem, _saveEvents }) => {
+const EventItem = memo(({ _events, eventItem, _saveEvents }) => {
     const [events, setEvents] = useState([..._events])
     const [newEvent, setNewEvent] = useState(eventItem.title);
     const [isEditing, setIsEditing] = useState(false)
 
     const onChangeText = (e) => setNewEvent(e);
     const removeEventHandler = (_id) => {
-        Alert.alert(
-            "Delete the event", 
-            "Are you sure?", 
-            [
-                {text: "Cancel"}, 
-                {text: "Delete", style: "destructive", onPress: () => {
-                    const newEvents = [..._events]
-                    const targetEvent = (targetId) => targetId.id === _id;
-                    
-                    newEvents.splice(newEvents.findIndex(targetEvent), 1);         
-                    _saveEvents(newEvents);
-                }}
-            ]
-        )
+        if(Platform.OS === "web"){
+            const confirm = window.confirm("Do you want to delete this event?")
+            if(confirm){
+                const newEvents = [..._events]
+                const targetEvent = (targetId) => targetId.id === _id;
+                
+                newEvents.splice(newEvents.findIndex(targetEvent), 1);         
+                _saveEvents(newEvents);
+            }
+        }
+        else{
+            Alert.alert(
+                "Delete the event", 
+                "Are you sure?", 
+                [
+                    {text: "Cancel"}, 
+                    {text: "Delete", style: "destructive", onPress: () => {
+                        const newEvents = [..._events]
+                        const targetEvent = (targetId) => targetId.id === _id;
+                        
+                        newEvents.splice(newEvents.findIndex(targetEvent), 1);         
+                        _saveEvents(newEvents);
+                    }}
+                ]
+            )
+        }
+
     }
     const toggleEdit = () => {
         setIsEditing( prev => !prev );
@@ -74,7 +87,7 @@ const EventItem = ({ _events, eventItem, _saveEvents }) => {
 
     )
 }
-
+)
 
 const styles = StyleSheet.create({
     event: {

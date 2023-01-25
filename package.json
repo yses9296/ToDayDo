@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "deploy": "gh-pages -d web-build",
+    "predeploy": "expo export:web"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -17,6 +19,7 @@
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
     "expo-updates": "~0.15.6",
+    "gh-pages": "^5.0.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
@@ -28,5 +31,6 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "private": true
+  "private": true,
+  "homepage": "https://yses9296.github.io/ToDayDo/"
 }

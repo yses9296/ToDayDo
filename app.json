@@ -4,12 +4,12 @@
     "slug": "ToDayDo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ToDayDo_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/ToDayDo_icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.yses9296.ToDayDo"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/ToDayDo_favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "843c2fe6-bb80-4e74-b1d6-e5e31ed8f7c8"
+      }
     }
   }
 }

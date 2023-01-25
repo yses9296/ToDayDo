@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, Button, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { format } from "date-fns";
@@ -8,7 +8,7 @@ import EventItem from './EventItem';
 
 const STORAGE_KEY ='@events'
 
-const CalendarView = () => {
+const CalendarView = memo(() => {
   const [event, setEvent] = useState('');
   const [events, setEvents] = useState([]);
   const today =  format(new Date(), 'yyyy-MM-dd');
@@ -112,7 +112,7 @@ const CalendarView = () => {
         </ScrollView>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
     calendar: {
