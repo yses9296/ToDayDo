@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity, Dimensions, Alert  } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { StyleSheet, View, Text, TextInput, ScrollView, TouchableOpacity, Dimensions, Alert, Animated, Keyboard } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Fontisto } from '@expo/vector-icons'; 
 import { theme } from '../colors.js';
+import ToDoItem from './ToDoItem.js';
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const STORAGE_KEY ='@toDos'
 
 const ToDoView = () => {
     const [task, setTask] = useState('');
-    const onChangeText = (e) => setTask(e);
-
     const [todos, setTodos] = useState({});
-    const [toggle, setToggle] = useState(false);
+
 
     useEffect(() => {
         loadToDos();
-    },[toggle, todos])
+    },[todos]);
 
-
+    const onChangeText = (e) => setTask(e);
     const saveTodos = async (_todo) => {
         try {
             await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(_todo))
@@ -46,35 +44,6 @@ const ToDoView = () => {
         //reset
         setTask('');
     }
-    const removeTaskHandler = (id) => {
-        Alert.alert(
-            "Delete To Do", 
-            "Are you sure?", 
-            [
-                {text: "Cancel"}, 
-                {text: "Delete", style: "destructive", onPress: () => {
-                    const newTodos = {...todos}
-                    delete newTodos[id]
-            
-                    setTodos(newTodos);    
-                    saveTodos(newTodos);
-                }}
-            ]
-        )
-    }
-    const toggleCheck = (id) => {
-        const newTodos = {...todos}
-
-        newTodos[id].completed ? newTodos[id].completed=false : newTodos[id].completed=true
-
-        setToggle( prev => !prev )
-        setTodos(newTodos);    
-        saveTodos(newTodos);
-
-    }
-    const updateTaskHandler = async(id) => {
-
-    }
 
     return (
         <View>
@@ -87,29 +56,8 @@ const ToDoView = () => {
                 returnKeyType='done'
             />
             <ScrollView>
-            {Object.keys(todos).reverse().map( key => (
-                <View key={key} style={styles.task}>
- 
-                    { !todos[key].completed
-                    ? (
-                        <>
-                            <Fontisto name="checkbox-passive" size={20} color={theme.white} style={styles.checkBox} onPress={() => toggleCheck(key) }/> 
-                            <Text style={{...styles.taskText, color: 'white'}}>{todos[key].text}</Text>
-                        </>
-                    )
-                    : (
-                        <>
-                            <Fontisto name="checkbox-active" size={20} color={theme.grey} style={styles.checkBox} onPress={() => toggleCheck(key) }/>
-                            <Text style={{...styles.taskText, color: '#3A3D40'}}>{todos[key].text}</Text>
-                        </>
-                    )}
-                    
-
-                    <TouchableOpacity onPress={ () => removeTaskHandler(key) }>
-                        <Fontisto name="trash" size={20} color={theme.grey} />
-                    </TouchableOpacity>
-                    
-                </View>
+            {Object.keys(todos).reverse().map( (key) => (
+                <ToDoItem key={key} _key={key} __todos={todos} _saveTodos={saveTodos} _loadToDos={loadToDos}/>
             ))}
             </ScrollView>
         </View> 
@@ -145,8 +93,11 @@ const styles = StyleSheet.create({
     checkBox: {
         flex: 1,
         marginRight: 20
-    }
+    },
 
+    deleteBtn: {
+        marginLeft: 15
+    },
 });
 
 export default ToDoView
