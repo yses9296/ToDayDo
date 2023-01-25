@@ -93,6 +93,8 @@ const CalendarView = () => {
             onChangeText={text => onChangeText(text)}
             placeholder='New Event'
             value={event}
+            onSubmitEditing={addEventHandler}
+            returnKeyType='done'
           />
           <Button 
             style={styles.addBtn}
